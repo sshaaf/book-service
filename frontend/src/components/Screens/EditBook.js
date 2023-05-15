@@ -1,14 +1,15 @@
 import React, {useState, useEffect} from 'react'
 import {
-    useParams, useHistory
+    useParams, useNavigate
 } from 'react-router-dom'
 import booksService from '../../services/booksService'
-import { Form, Button, Input} from 'antd';
-import { PageHeader } from 'antd';
+import { Form, Input} from 'antd';
+import { Button } from "@material-tailwind/react";
+import { PageHeader } from '@ant-design/pro-layout';
 import TextArea from 'antd/lib/input/TextArea';
 
 const EditBook = () => {
-    const history = useHistory()
+    const history = useNavigate()
     // obtaining isbn for specific book
     const isbn = useParams().isbn
     const [newTitle, setNewTitle] = useState('')
@@ -42,7 +43,7 @@ const EditBook = () => {
     return (
         <div>
             <PageHeader
-                onBack={() => history.goBack()}
+                onBack={() => history(-1)}
                 title='Editing' 
                 subTitle={newTitle}
             />
@@ -50,7 +51,7 @@ const EditBook = () => {
                 style={{padding: '2%'}}
                 onFinish={(values) => {
                     updateBook(values)
-                    history.goBack()
+                    history(-1)
                 }}
                 autoComplete='off'
                 labelCol={{ span: 3 }}

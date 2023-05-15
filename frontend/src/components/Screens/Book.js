@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
 import booksService from '../../services/booksService'
-import {useParams, useHistory} from 'react-router-dom'
+import {useParams, useNavigate} from 'react-router-dom'
 import DescriptionsItem from 'antd/lib/descriptions/Item';
 import { Descriptions } from 'antd';
-import { PageHeader } from 'antd';
+import { PageHeader } from '@ant-design/pro-layout';
 
 const Book = ({books, setBooks}) => {
-    const history = useHistory()
+    const history = useNavigate()
     useEffect(() => {
         booksService
             .getAll()
@@ -22,7 +22,7 @@ const Book = ({books, setBooks}) => {
         return (
             <div>
                 <PageHeader 
-                    onBack={() => history.goBack()}
+                    onBack={() => history(-1)}
                     title='Book Information' 
                 />
                 <Descriptions 

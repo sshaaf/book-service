@@ -1,12 +1,12 @@
 import React from 'react'
 import booksService from '../../services/booksService';
-import {useHistory} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import { Form, Button, Input} from 'antd';
-import { PageHeader } from 'antd';
+import { PageHeader } from '@ant-design/pro-layout';
 import TextArea from 'antd/lib/input/TextArea';
 
 const CreateNewBook = ({books, setBooks}) => {
-    const history = useHistory()
+    const history = useNavigate()
     const booksIsbn = books.map(book => book.isbn)
     const addBook = (values) => {
         const BookObject = {
@@ -23,14 +23,14 @@ const CreateNewBook = ({books, setBooks}) => {
     return (
         <div>
             <PageHeader
-                onBack={() => history.goBack()}
+                onBack={() => history(-1)}
                 title='Creating New Book' 
             />
             <Form
                 style={{padding: '2%'}}
                 onFinish={(values) => {
                     addBook(values)
-                    history.goBack()
+                    history(-1)
                 }}
                 autoComplete='off'
                 labelCol={{ span: 3 }}
