@@ -1,70 +1,72 @@
-# Getting Started with Create React App
+# Books Manager Service Project
+Is a backend service written in Quarkus that does the following. 
+- The API is a Books API, uses a Pg database in the backend to store the data. 
+- This project uses Quarkus, the Supersonic Subatomic Java Framework.
+- It uses the Quarkus oidc extension to authorize against Keycloak
+- An angular front-end for this service is also available here.
+- API endpoints
+  - GET -> getAll,
+  - GET /{isbn} -> getOne,
+  - DELETE /{isbn} -> remove,
+  - POST -> create,
+  - PUT /isbn -> update
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+-----------------------
+If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
 
-## Available Scripts
+## Running the application in dev mode
 
-In the project directory, you can run:
+You can run your application in dev mode that enables live coding using:
 
-### `npm start`
+```shell script
+./mvnw compile quarkus:dev
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Packaging and running the application
 
-### `npm test`
+The application can be packaged using:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```shell script
+./mvnw package
+```
 
-### `npm run build`
+It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
+Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+If you want to build an _über-jar_, execute the following command:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```shell script
+./mvnw package -Dquarkus.package.type=uber-jar
+```
 
-### `npm run eject`
+The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Creating a native executable
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+You can create a native executable using:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```shell script
+./mvnw package -Pnative
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
 
-## Learn More
+```shell script
+./mvnw package -Pnative -Dquarkus.native.container-build=true
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+You can then execute your native executable with: `./target/keycloak-basic-1.0-SNAPSHOT-runner`
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+If you want to learn more about building native executables, please consult https://quarkus.io/guides/maven-tooling.
 
-### Code Splitting
+## Provided Code
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### RESTEasy Reactive
 
-### Analyzing the Bundle Size
+Easily start your Reactive RESTful Web Services
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
