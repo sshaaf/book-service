@@ -1,5 +1,6 @@
 package org.acme;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
@@ -11,7 +12,7 @@ public class BookResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-
+    @RolesAllowed("user")
     public List<Book> getAll() {
         return Book.listAll();
 
@@ -19,7 +20,7 @@ public class BookResource {
 
     @GET
     @Path("/{isbn}")
-
+    @RolesAllowed("user")
     public Book getOne(@PathParam("isbn") String isbn) {
         Book entity = Book.findById(isbn);
         if (entity == null) {
@@ -29,7 +30,7 @@ public class BookResource {
     }
 
     @POST
-
+    @RolesAllowed("user")
     @Transactional
     public Response create(@Valid Book item) {
         item.persist();
@@ -38,7 +39,7 @@ public class BookResource {
 
     @PUT
     @Path("/{id}")
-
+    @RolesAllowed("user")
     @Transactional
     public Response update(@Valid Book book, @PathParam("id") String isbn) {
         Book entity = Book.findById(isbn);
@@ -50,7 +51,7 @@ public class BookResource {
 
     @DELETE
     @Path("/{isbn}")
-
+    @RolesAllowed("user")
     @Transactional
     public Response deleteOne(@PathParam("isbn") String isbn) {
         Book entity = Book.findById(isbn);
