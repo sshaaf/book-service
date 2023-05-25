@@ -1,4 +1,4 @@
-# Books Manager Service Project
+# Book Service
 Is a backend service written in Quarkus that does the following. 
 - The API is a Books API, uses a Pg database in the backend to store the data. 
 - This project uses Quarkus, the Supersonic Subatomic Java Framework.
@@ -70,3 +70,27 @@ If you want to learn more about building native executables, please consult http
 Easily start your Reactive RESTful Web Services
 
 [Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+
+
+
+### Securing with Keycloak
+
+
+
+Testing the backend service from a terminal
+Getting a token from Keycloak. 
+```
+export access_token=$(\
+  curl --insecure -X POST http://localhost:32778/realms/quarkus/protocol/openid-connect/token \
+  --user backend-service:secret \
+  -H 'content-type: application/x-www-form-urlencoded' \
+  -d 'username=alice&password=alice&grant_type=password' | jq --raw-output '.access_token' \
+  )
+```
+
+Hitting the API with the token.
+
+```
+curl -v -X GET   http://localhost:8888/books   -H "Authorization: Bearer "$access_token
+```
+
