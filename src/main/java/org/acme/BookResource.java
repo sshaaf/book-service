@@ -16,6 +16,8 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.jboss.logging.Logger;
 
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
+import org.jboss.resteasy.reactive.NoCache;
+import jakarta.annotation.security.RolesAllowed;
 
 @Path("/api/books")
 @Tag(name = "books")
@@ -24,6 +26,8 @@ public class BookResource {
 
     private static final Logger logger = Logger.getLogger(BookResource.class);
     @GET
+    @RolesAllowed("user")
+    @NoCache
     @Operation(summary = "Get all books")
     @APIResponse(
             responseCode = "200",
